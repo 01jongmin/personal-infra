@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gawon-deploy
+  labels:
+    app: gawon
+spec:
+  selector:
+    matchLabels:
+      app: gawon
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: gawon
+    spec:
+      containers:
+      - name: gawon
+        image: 01jongmin/gawon
+        resources:
+          limits:
+            cpu: "100m"

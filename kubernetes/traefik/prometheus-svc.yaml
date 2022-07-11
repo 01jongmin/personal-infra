@@ -1,0 +1,19 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: prometheus
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`prometheus.jongmin.space`) && (PathPrefix(`/metrics`))
+      kind: Rule
+      services:
+        - name: prometheus@internal
+          kind: TraefikService
+      #middlewares:
+        #- name: auth
+  tls:
+    secretName: prod-tls
+    domains:
+      - main: prometheus.jongmin.space

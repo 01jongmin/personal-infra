@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flights-backend-deploy
+  labels:
+    app: flights-backend
+spec:
+  selector:
+    matchLabels:
+      app: flights-backend
+  replicas: 0
+  template:
+    metadata:
+      labels:
+        app: flights-backend
+    spec:
+      containers:
+      - name: flights-backend
+        image: 01jongmin/flights-backend:latest
+        ports:
+        - containerPort: 8000
+        imagePullPolicy: "Always"
+        env:
+        - name: DB_POOL_SIZE
+          value: "3"
+        - name: DB_CONNECTION_URL
+          valueFrom:
+            secretKeyRef:
+              name: flights-secret
+              key: DB_CONNECTION_URL

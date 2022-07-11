@@ -1,0 +1,31 @@
+server:
+  extraVolumes:
+    - type: 'secret'
+      name: 'kms-creds'
+
+  ha:
+    enabled: true
+    replicas: 2
+    raft:
+      enabled: true
+      config: |
+        ui = true
+
+        listener "tcp" {
+          tls_disable = 1
+          address = "[::]:8200"
+          cluster_address = "[::]:8201"
+        }
+
+        seal "gcpckms" {
+          credentials = "/vault/userconfig/kms-creds/kms-credentials.json"
+          project     = "personal-348615"
+          region      = "global"
+          key_ring    = "personal-vault"
+          crypto_key  = "vault-key"
+        }
+
+        storage "raft" {
+          path = "/vault/data"
+        }
+

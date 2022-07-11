@@ -1,0 +1,18 @@
+#ports:
+  #web:
+    #redirectTo: websecure
+      
+#deployment:
+  #replicas: 1
+
+service:
+  type: NodePort
+
+ports:
+  web:
+    hostPort: 80
+    redirectTo: websecure
+  websecure:
+    hostPort: 443
+
+#hostNetwork: true

@@ -1,0 +1,9 @@
+apiVersion: v1 
+kind: Service 
+metadata:
+  name: flights-service
+spec:
+  ports:
+  - port: 8000
+  selector:
+    app: flights-backend

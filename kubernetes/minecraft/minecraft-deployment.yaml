@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: minecraft-deploy
+  labels:
+    app: minecraft
+spec:
+  selector:
+    matchLabels:
+      app: minecraft
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: minecraft
+    spec:
+      containers:
+      - name: minecraft
+        image: 01jongmin/minecraft

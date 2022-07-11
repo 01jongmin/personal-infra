@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: personal-website-deploy
+  labels:
+    app: personal-website
+spec:
+  selector:
+    matchLabels:
+      app: personal-website
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: personal-website
+    spec:
+      containers:
+      - name: personal-website-gatsby
+        image: 01jongmin/website:latest
+        imagePullPolicy: "Always"

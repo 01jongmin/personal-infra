@@ -1,0 +1,32 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: gawon-ingress
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/router.tls: "true"
+    traefik.ingress.kubernetes.io/router.middlewares: "default-gawon-auth@kubernetescrd"
+spec:
+  rules:
+  - host: gawon.jongmin.space
+    http:
+      paths:
+      - pathType: Prefix
+        path: /
+        backend:
+          service:
+            name:  gawon-service
+            port:
+              number: 80
+  tls:
+  - hosts:
+    - gawon.jongmin.space
+    secretName: prod-tls
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: gawon-auth
+spec:
+  basicAuth:
+    secret: gawon-secret # Kubernetes secret named "secretName"
